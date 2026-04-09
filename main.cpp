@@ -27,3 +27,30 @@ struct arp_hdr {
 //so after i receive arp request if tar ip = my ip swap ?
 //do arp (after)
 //arping -I tap0 10.0.0.4 example runcode
+int main() {
+    int fd;
+    char dev[IFNAMSIZ] = "tap0";
+
+    // 1. create TAP device
+    fd = tun_alloc(dev);
+
+    // 2. (optional but important) configure it externally:
+    // ip addr add 10.0.0.4/24 dev tap0
+    // ip link set dev tap0 up
+
+    // 3. NOW run your loop
+    char buf[1500];
+
+    while (1) {
+        int len = read(fd, buf, sizeof(buf));
+        struct eth_hdr *hdr = (struct eth_hdr *) buf;
+        switch (ntohs(hdr->ethertype)) {
+            case 0x0806: // ARP
+                handle_arp(fd, buf, len);
+                break;
+            case 0x0800: // IPv4
+                handle_ip(fd, buf, len);
+                break;
+        }
+    }
+}
