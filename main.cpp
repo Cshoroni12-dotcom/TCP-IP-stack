@@ -5,8 +5,8 @@ struct eth_hdr {
     unsigned char smac[6];
     uint16_t ethertype;
 };
-struct eth_hdr *hdr = (struct eth_hdr *) buf; // gives perm
-read(fd, buf)
+read(fd, buf, size);              // 1. get data
+struct eth_hdr *hdr = (struct eth_hdr *) buf;  // 2. interpret it
 
 parse Ethernet
 
