@@ -12,7 +12,7 @@ parse Ethernet
 
 switch(ethertype)
      ARP handler
-     (later) IP handler //appearently i dont quiet understand but it is how firewall works?
+     (later) IP handler //appearently i dont quiet understand but it is how firewall works? uhh note from future, it isnt but kinda sim
 //oh i get it 
 // now we need "arp'
 //so the arp solves the problem that we know ip but dont know mac (not apple btw)
